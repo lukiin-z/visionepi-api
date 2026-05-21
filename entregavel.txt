@@ -1,0 +1,35 @@
+ENTREGÁVEL — SPRINT 1: BACKEND (API REST)
+Advanced Database & Big Data | FIAP — Engenharia de Computação — Turma 3ECR
+
+===========================================================================
+INTEGRANTES
+===========================================================================
+
+Nome: Pedro Gonçalves         RM: 557936
+Nome: Lucas Baraldi           RM: 555407
+Nome: Lucas Zolla              RM: 557952
+Nome: Vitor Pantarotto        RM: 554961
+
+===========================================================================
+REPOSITÓRIO DO BACKEND
+===========================================================================
+
+https://github.com/lukiin-z/visionepi-api
+
+===========================================================================
+INSTRUÇÕES PARA O AVALIADOR
+===========================================================================
+
+1. Clonar o repositório:
+   git clone https://github.com/lukiin-z/visionepi-api.git
+
+2. Rodar a aplicação:
+   cd visionepi-api
+   mvn spring-boot:run
+
+3. API disponível em: http://localhost:8080
+   Console H2:        http://localhost:8080/h2-console
+
+4. Consultar o README.md para exemplos completos de todos os endpoints.
+
+===========================================================================
