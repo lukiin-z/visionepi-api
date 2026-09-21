@@ -17,6 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/deteccoes")
+@CrossOrigin(origins = "*")
 public class DeteccaoEpiController {
 
     @Autowired
