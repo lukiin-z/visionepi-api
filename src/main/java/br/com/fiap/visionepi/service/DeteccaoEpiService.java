@@ -54,7 +54,10 @@ public class DeteccaoEpiService {
             existente.setMatricula(dados.getMatricula());
             existente.setSetor(dados.getSetor());
             existente.setDescricaoCamera(dados.getDescricaoCamera());
-            existente.setDataDeteccao(dados.getDataDeteccao());
+            // dataDeteccao é opcional no payload: se omitida, mantém a original
+            if (dados.getDataDeteccao() != null) {
+                existente.setDataDeteccao(dados.getDataDeteccao());
+            }
             existente.setCapacete(dados.getCapacete());
             existente.setColete(dados.getColete());
             existente.setLuva(dados.getLuva());
