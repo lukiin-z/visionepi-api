@@ -1,5 +1,7 @@
 # VisionEPI — API REST
 
+> **Entrega final (Sprint 4): documentação completa em https://github.com/lukiin-z/visionepi-mobile**
+
 API REST desenvolvida com **Spring Boot** para gerenciamento de detecções de EPI (Equipamentos de Proteção Individual) realizadas pelo sistema de visão computacional VisionEPI em ambientes industriais.
 
 > **Sprint 1 — Advanced Backend | FIAP Engenharia de Computação 3ECR**
@@ -58,7 +60,7 @@ Representa uma detecção realizada pelo sistema de visão computacional. Cada r
 
 ### Pré-requisitos
 
-- Java 17+
+- Java 17 (com JDK 25 o build falha: o Lombok desta versão do Spring Boot não roda nele)
 - Maven 3.8+
 
 ### Passos
