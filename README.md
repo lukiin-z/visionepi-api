@@ -1,10 +1,13 @@
 # VisionEPI — API REST
 
-> **Entrega final (Sprint 4): documentação completa em https://github.com/lukiin-z/visionepi-mobile**
+> **Entrega final (Sprint 4): o documento principal é o
+> [README do app mobile](https://github.com/lukiin-z/visionepi-mobile#readme)** — lá estão
+> o passo a passo completo (API + app), a integração de ponta a ponta, o comportamento com
+> a API parada e o vídeo de demonstração. Este README cobre só a API.
 
-API REST desenvolvida com **Spring Boot** para gerenciamento de detecções de EPI (Equipamentos de Proteção Individual) realizadas pelo sistema de visão computacional VisionEPI em ambientes industriais.
+API REST desenvolvida com **Spring Boot** para gerenciamento de detecções de EPI (Equipamentos de Proteção Individual) realizadas pelo sistema de visão computacional VisionEPI em ambientes industriais. É o backend consumido pelo app [visionepi-mobile](https://github.com/lukiin-z/visionepi-mobile).
 
-> **Sprint 1 — Advanced Backend | FIAP Engenharia de Computação 3ECR**
+> FIAP Engenharia de Computação 3ECR — Advanced Programming & Mobile Dev (Sprint 4); a API nasceu na Sprint 1 de Advanced Backend.
 
 ---
 
@@ -43,16 +46,19 @@ Representa uma detecção realizada pelo sistema de visão computacional. Cada r
 
 ## Endpoints
 
-| Método | Endpoint | Descrição |
-|---|---|---|
-| `POST` | `/deteccoes` | Registra uma nova detecção |
-| `GET` | `/deteccoes` | Lista todas as detecções |
-| `GET` | `/deteccoes?setor=Soldagem` | Filtra por setor |
-| `GET` | `/deteccoes?matricula=004521` | Filtra por matrícula |
-| `GET` | `/deteccoes?nivelRiscoMinimo=3` | Filtra por nível de risco mínimo |
-| `GET` | `/deteccoes/{id}` | Busca detecção por ID |
-| `PUT` | `/deteccoes/{id}` | Atualiza detecção existente |
-| `DELETE` | `/deteccoes/{id}` | Remove detecção |
+| Método | Endpoint | Descrição | Respostas |
+|---|---|---|---|
+| `POST` | `/deteccoes` | Registra uma nova detecção | `201` + detecção · `400` + erro por campo |
+| `GET` | `/deteccoes` | Lista todas as detecções | `200` |
+| `GET` | `/deteccoes?setor=Soldagem` | Filtra por setor | `200` |
+| `GET` | `/deteccoes?matricula=004521` | Filtra por matrícula | `200` |
+| `GET` | `/deteccoes?nivelRiscoMinimo=3` | Filtra por nível de risco mínimo | `200` |
+| `GET` | `/deteccoes/{id}` | Busca detecção por ID | `200` · `404` |
+| `PUT` | `/deteccoes/{id}` | Atualiza detecção existente | `200` · `400` · `404` |
+| `DELETE` | `/deteccoes/{id}` | Remove detecção | `204` · `404` |
+
+CORS liberado para qualquer origem (`@CrossOrigin(origins = "*")`), o que inclui o Expo
+Web em `http://localhost:8081` / `http://localhost:19006`.
 
 ---
 
@@ -60,23 +66,36 @@ Representa uma detecção realizada pelo sistema de visão computacional. Cada r
 
 ### Pré-requisitos
 
-- Java 17 (com JDK 25 o build falha: o Lombok desta versão do Spring Boot não roda nele)
-- Maven 3.8+
+- **Java 17** (com JDK 25 o build falha: o Lombok desta versão do Spring Boot não roda nele). Se houver mais de um JDK, aponte o `JAVA_HOME` para o 17.
+- Maven: **não precisa instalar** — o repositório traz o Maven Wrapper (`mvnw` / `mvnw.cmd`), que baixa o Maven 3.9.16 na primeira execução.
 
 ### Passos
 
-```bash
-# 1. Clonar o repositório
+**Windows (PowerShell ou cmd):**
+
+```powershell
 git clone https://github.com/lukiin-z/visionepi-api.git
 cd visionepi-api
-
-# 2. Compilar e subir a aplicação
-mvn spring-boot:run
+.\mvnw.cmd spring-boot:run
 ```
 
-A API estará disponível em: `http://localhost:8080`
+**Linux / macOS:**
 
-O banco H2 persiste os dados na pasta `./data/visionepi_db`.
+```bash
+git clone https://github.com/lukiin-z/visionepi-api.git
+cd visionepi-api
+./mvnw spring-boot:run
+```
+
+A API está pronta quando o log mostra `Started VisionepiApplication ... ` e
+`Tomcat started on port 8080`. Endereço: `http://localhost:8080`. Para parar: `Ctrl+C`.
+
+Testes automatizados: `.\mvnw.cmd test` (Windows) ou `./mvnw test` (Linux/macOS).
+
+Se no Windows a subida falhar com `Unable to establish loopback connection`, veja a
+solução na seção 4 do [README do app](https://github.com/lukiin-z/visionepi-mobile#readme).
+
+O banco H2 persiste os dados na pasta `./data/visionepi_db` (no `.gitignore`); os registros continuam lá depois de reiniciar a API.
 
 Console H2 (para inspecionar o banco): `http://localhost:8080/h2-console`
 - JDBC URL: `jdbc:h2:file:./data/visionepi_db`
@@ -212,4 +231,4 @@ src/main/java/br/com/fiap/visionepi/
 | H2 Database (file mode) | — |
 | Bean Validation | — |
 | Lombok | — |
-| Maven | 3.8+ |
+| Maven | 3.9.16 (via Maven Wrapper) |
