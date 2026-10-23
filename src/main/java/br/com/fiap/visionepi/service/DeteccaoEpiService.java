@@ -21,6 +21,8 @@ public class DeteccaoEpiService {
     // ── CREATE ────────────────────────────────────────────────────────────────
 
     public DeteccaoEpi salvar(DeteccaoEpi deteccao) {
+        // POST sempre cria: um "id" vindo no corpo transformaria o save em UPDATE de outro registro
+        deteccao.setId(null);
         return repository.save(deteccao);
     }
 
