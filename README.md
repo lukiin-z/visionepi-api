@@ -92,9 +92,6 @@ A API está pronta quando o log mostra `Started VisionepiApplication ... ` e
 
 Testes automatizados: `.\mvnw.cmd test` (Windows) ou `./mvnw test` (Linux/macOS).
 
-Se no Windows a subida falhar com `Unable to establish loopback connection`, veja a
-solução na seção 4 do [README do app](https://github.com/lukiin-z/visionepi-mobile#readme).
-
 O banco H2 persiste os dados na pasta `./data/visionepi_db` (no `.gitignore`); os registros continuam lá depois de reiniciar a API.
 
 Console H2 (para inspecionar o banco): `http://localhost:8080/h2-console`
@@ -232,3 +229,22 @@ src/main/java/br/com/fiap/visionepi/
 | Bean Validation | — |
 | Lombok | — |
 | Maven | 3.9.16 (via Maven Wrapper) |
+
+---
+
+## Solução de problemas
+
+**Opcional — só se o backend falhar no Windows com erro de socket no `%TEMP%`.** O
+sintoma é `Unable to start embedded Tomcat server` com
+`Unable to establish loopback connection` / `Invalid argument: connect` no fim do log:
+o JDK 17 cria um socket local (AF_UNIX) na pasta `%TEMP%`, e em algumas máquinas essa
+pasta recusa o socket. Nesse caso, aponte para uma pasta vazia e suba de novo, no mesmo
+terminal:
+
+```powershell
+New-Item -ItemType Directory -Force C:\jdk-sock
+$env:JAVA_TOOL_OPTIONS = "-Djdk.net.unixdomain.tmpdir=C:\jdk-sock"
+.\mvnw.cmd spring-boot:run
+```
+
+Sem esse erro, nada disso é necessário: use só o comando padrão de "Como rodar o projeto".
